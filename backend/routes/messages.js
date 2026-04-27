@@ -22,4 +22,19 @@ router.get('/search', (req, res) => {
     res.json(stmt.all(`%${query}%`));
 });
 
+// search from specific conversation
+router.get('/:conversationId', (req, res) => {
+  const { conversationId } = req.params;
+  const { query } = req.query;
+
+  const stmt = db.prepare(`
+    SELECT * FROM messages
+    WHERE conversation_id = ?
+    AND message LIKE ?
+    ORDER BY timestamp ASC
+  `);
+
+  res.json(stmt.all(decodeURIComponent(conversationId), `%${query}%`));
+});
+
 module.exports = router;
