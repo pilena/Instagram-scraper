@@ -2,11 +2,11 @@ import { useState } from 'react'
 import Sidebar from './components/Sidebar'
 import RightPanel from './components/RightPanel'
 import { useOwner } from './hooks/useOwner'
-import { useConversations } from './hooks/useConversations'
+import { Conversation, useConversations } from './hooks/useConversations'
 import { useMessages } from './hooks/useMessages'
 
 function App() {
-  const [selectedConvo, setSelectedConvo] = useState(null)
+  const [selectedConvo, setSelectedConvo] = useState<Conversation | null>(null)
   const owner = useOwner()
   const conversations = useConversations()
   const messages = useMessages(selectedConvo)
@@ -20,6 +20,7 @@ function App() {
         owner={owner}
       />
       <RightPanel
+        key={selectedConvo?.conversation_id}
         selectedConvo={selectedConvo}
         messages={messages}
         owner={owner}

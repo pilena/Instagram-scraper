@@ -1,10 +1,21 @@
 import { useRef, useEffect } from 'react'
 import Message from './Message'
 import { formatDate } from '../utils/formatting'
+import { Message as MessageType } from '../hooks/useMessages'
 
-export default function MessageList({ messages, owner, currentMatch }) {
-  const bottomRef = useRef(null)
-  const matchRef = useRef(null)
+export type MessageListProps = {
+  messages: MessageType[]
+  owner: string
+  currentMatch: MessageType | null
+}
+
+export default function MessageList({
+  messages,
+  owner,
+  currentMatch,
+}: MessageListProps) {
+  const bottomRef = useRef<HTMLDivElement>(null)
+  const matchRef = useRef<HTMLDivElement>(null)
 
   // Scroll to bottom when conversation first loads
   useEffect(() => {
@@ -25,12 +36,15 @@ export default function MessageList({ messages, owner, currentMatch }) {
     }
   }, [currentMatch])
 
-  const groupedMessages = messages.reduce((groups, msg) => {
-    const date = formatDate(msg.timestamp)
-    if (!groups[date]) groups[date] = []
-    groups[date].push(msg)
-    return groups
-  }, {})
+  const groupedMessages = messages.reduce<Record<string, MessageType[]>>(
+    (groups, msg) => {
+      const date = formatDate(msg.timestamp)
+      if (!groups[date]) groups[date] = []
+      groups[date].push(msg)
+      return groups
+    },
+    {}
+  )
 
   return (
     <div className="flex-1 overflow-y-auto px-6 py-4">

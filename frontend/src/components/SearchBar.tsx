@@ -1,3 +1,16 @@
+import { Message as MessageType } from '../hooks/useMessages'
+
+export type SearchBarProps = {
+  query: string
+  setQuery: (value: string) => void
+  onSearch: () => void
+  onNext: () => void
+  onPrev: () => void
+  onClose: () => void
+  results: MessageType[]
+  currentIndex: number
+}
+
 export default function SearchBar({
   query,
   setQuery,
@@ -7,7 +20,7 @@ export default function SearchBar({
   onClose,
   results,
   currentIndex,
-}) {
+}: SearchBarProps) {
   return (
     <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-3 py-2 shadow-sm">
       <input

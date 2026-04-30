@@ -2,8 +2,20 @@ import MessageList from './MessageList'
 import SearchBar from './SearchBar'
 import { getNameFromConvoId } from '../utils/formatting'
 import { useSearch } from '../hooks/useSearch'
+import { Message as MessageType } from '../hooks/useMessages'
+import { Conversation as ConversationType } from '../hooks/useConversations'
 
-export default function RightPanel({ selectedConvo, messages, owner }) {
+export type RightPanelProps = {
+  selectedConvo: ConversationType | null
+  messages: MessageType[]
+  owner: string
+}
+
+export default function RightPanel({
+  selectedConvo,
+  messages,
+  owner,
+}: RightPanelProps) {
   const name = selectedConvo
     ? getNameFromConvoId(selectedConvo.conversation_id)
     : null
@@ -19,7 +31,7 @@ export default function RightPanel({ selectedConvo, messages, owner }) {
     prev,
     clear,
     currentMatch,
-  } = useSearch(selectedConvo)
+  } = useSearch()
 
   return (
     <div className="flex-1 flex flex-col">
@@ -34,7 +46,7 @@ export default function RightPanel({ selectedConvo, messages, owner }) {
               <SearchBar
                 query={query}
                 setQuery={setQuery}
-                onSearch={search}
+                onSearch={() => selectedConvo && search(selectedConvo)}
                 onNext={next}
                 onPrev={prev}
                 onClose={clear}

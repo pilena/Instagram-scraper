@@ -1,6 +1,19 @@
 import { formatTime } from '../utils/formatting'
+import { Message as MessageType } from '../hooks/useMessages'
 
-export default function Message({ msg, owner, isMatch, matchRef }) {
+export type MessageProps = {
+  msg: MessageType
+  owner: string
+  isMatch: boolean
+  matchRef: React.Ref<HTMLDivElement>
+}
+
+export default function Message({
+  msg,
+  owner,
+  isMatch,
+  matchRef,
+}: MessageProps) {
   const isOwner = msg.sender === owner
 
   return (

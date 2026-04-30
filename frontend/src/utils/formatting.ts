@@ -1,9 +1,9 @@
-export function formatTime(timestamp) {
+export function formatTime(timestamp: string): string {
   const date = new Date(timestamp)
   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 }
 
-export function formatDate(timestamp) {
+export function formatDate(timestamp: string): string {
   return new Date(timestamp).toLocaleDateString([], {
     year: 'numeric',
     month: 'long',
@@ -11,11 +11,14 @@ export function formatDate(timestamp) {
   })
 }
 
-export function getNameFromConvoId(conversationId) {
-  return conversationId.split('/').pop().split('_')[0]
+export function getNameFromConvoId(conversationId: string): string {
+  const parts = conversationId.split('/')
+  const lastPart = parts.pop()
+  if (!lastPart) return conversationId
+  return lastPart.split('_')[0] ?? conversationId
 }
 
-export function getGradient(name) {
+export function getGradient(name: string): string {
   const colors = [
     'from-pink-400 to-rose-500',
     'from-purple-400 to-indigo-500',

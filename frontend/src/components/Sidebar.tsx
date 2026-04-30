@@ -1,11 +1,19 @@
 import { getNameFromConvoId, getGradient } from '../utils/formatting'
+import { Conversation as ConversationType } from '../hooks/useConversations'
+
+export type SidebarProps = {
+  conversations: ConversationType[]
+  selectedConvo: ConversationType | null
+  onSelect: (value: ConversationType) => void
+  owner: string
+}
 
 export default function Sidebar({
   conversations,
   selectedConvo,
   onSelect,
   owner,
-}) {
+}: SidebarProps) {
   return (
     <div className="w-80 border-r border-gray-200 flex flex-col">
       <div className="p-4 border-b border-gray-200">
