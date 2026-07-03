@@ -12,6 +12,6 @@ app.use('/conversations', require('./routes/conversations'));
 app.use('/messages', require('./routes/messages'));
 app.use('/search', require('./routes/messages'));
 
-app.listen(PORT, () => {
+app.listen(PORT, '127.0.0.1', () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
